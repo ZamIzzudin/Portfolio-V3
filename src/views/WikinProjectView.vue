@@ -55,13 +55,11 @@ onUnmounted(() => {
       </div>
     </div>
     <div class="mt-[5rem] relative wikin-features">
-      <AnimatedWLogo :size="logoSize"
-        class="rotate-180 absolute -bottom-0 -left-10 md:-left-30 hidden md:block" />
+      <AnimatedWLogo :size="logoSize" class="rotate-180 absolute -bottom-0 -left-10 md:-left-30 hidden md:block" />
       <div class="max-w-[520px] mx-auto px-4 md:px-0">
         <GrammarFillBlank />
       </div>
-      <AnimatedWLogo :size="logoSize"
-        class="rotate-45 absolute bottom-0 -right-10 md:-right-30 hidden md:block" />
+      <AnimatedWLogo :size="logoSize" class="rotate-45 absolute bottom-0 -right-10 md:-right-30 hidden md:block" />
     </div>
     <AppNavbar />
 
@@ -112,7 +110,13 @@ onUnmounted(() => {
       </div>
     </section>
 
-    <section class="container-wide mt-[2rem]">
+    <section class="container-wide mt-[2rem] text-center">
+      <h2 class="heading-display section-title">Try Wikin in 60 Second</h2>
+      <p class="section-subtitle mx-auto!">Interactive demos showcasing the core features. Try them right here
+        — all
+        state
+        is
+        in-memory.</p>
       <AdaptiveQuiz />
     </section>
 

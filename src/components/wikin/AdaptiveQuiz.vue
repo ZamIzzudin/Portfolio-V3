@@ -159,34 +159,20 @@ function reset() {
       <p class="question-text">{{ currentQ.text }}</p>
 
       <div class="options">
-        <button
-          v-for="(opt, idx) in currentQ.options"
-          :key="idx"
-          class="option"
-          :class="{
+        <button v-for="(opt, idx) in currentQ.options" :key="idx" class="option" :class="{
+          correct: answered && idx === currentQ.correct,
+          wrong: answered && idx === selectedIdx && idx !== currentQ.correct,
+          dimmed: answered && idx !== currentQ.correct && idx !== selectedIdx,
+        }" :disabled="answered" @click="selectAnswer(idx)">
+          <span class="radio" :class="{
             correct: answered && idx === currentQ.correct,
             wrong: answered && idx === selectedIdx && idx !== currentQ.correct,
-            dimmed: answered && idx !== currentQ.correct && idx !== selectedIdx,
-          }"
-          :disabled="answered"
-          @click="selectAnswer(idx)"
-        >
-          <span
-            class="radio"
-            :class="{
-              correct: answered && idx === currentQ.correct,
-              wrong: answered && idx === selectedIdx && idx !== currentQ.correct,
-            }"
-          ></span>
+          }"></span>
           <span>{{ String.fromCharCode(65 + idx) }}. {{ opt }}</span>
         </button>
       </div>
 
-      <div
-        v-if="answered"
-        class="feedback"
-        :class="{ correct: isCorrect, wrong: !isCorrect }"
-      >
+      <div v-if="answered" class="feedback" :class="{ correct: isCorrect, wrong: !isCorrect }">
         {{
           isCorrect
             ? 'Correct! Difficulty will increase for the next question.'
@@ -194,11 +180,7 @@ function reset() {
         }}
       </div>
 
-      <button
-        v-if="answered && !isFinished"
-        class="next-btn"
-        @click="nextQuestion"
-      >
+      <button v-if="answered && !isFinished" class="next-btn" @click="nextQuestion">
         Next Question &rarr;
       </button>
     </div>
@@ -208,12 +190,7 @@ function reset() {
       <div class="final-score">{{ score }}/{{ TOTAL_QUESTIONS }}</div>
       <div class="difficulty-path">
         <strong>Difficulty Path:</strong><br />
-        <span
-          v-for="(d, i) in difficultyPath"
-          :key="i"
-          class="path-dot"
-          :class="d"
-        ></span>
+        <span v-for="(d, i) in difficultyPath" :key="i" class="path-dot" :class="d"></span>
         <span class="path-legend">
           <span class="path-dot easy"></span> Easy
           <span class="path-dot medium"></span> Medium
@@ -228,16 +205,18 @@ function reset() {
 <style scoped>
 .adaptive-demo {
   background: var(--color-surface);
-  border: 1px solid var(--color-divider);
+  border: 1px solid var(--brand-color);
   border-radius: var(--radius-lg);
   padding: 2.8rem;
 }
+
 .demo-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1.6rem;
 }
+
 .badge-tag {
   font-size: 1.1rem;
   font-weight: 600;
@@ -245,6 +224,7 @@ function reset() {
   text-transform: uppercase;
   color: var(--brand-color);
 }
+
 .difficulty-badge {
   font-size: 1.2rem;
   font-weight: 600;
@@ -253,18 +233,22 @@ function reset() {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
 .difficulty-badge.easy {
   background: #e6faf2;
   color: #1daf6a;
 }
+
 .difficulty-badge.medium {
   background: #fef3c7;
   color: #92400e;
 }
+
 .difficulty-badge.hard {
   background: #ef4444;
   color: white;
 }
+
 .progress-row {
   display: flex;
   justify-content: space-between;
@@ -273,6 +257,7 @@ function reset() {
   font-size: 1.2rem;
   color: var(--color-tertiary);
 }
+
 .progress-bar-bg {
   height: 0.6rem;
   background: var(--color-muted);
@@ -280,12 +265,14 @@ function reset() {
   overflow: hidden;
   margin-bottom: 1.8rem;
 }
+
 .progress-bar-fill {
   height: 100%;
   background: var(--brand-color);
   border-radius: 0.3rem;
   transition: width 0.3s;
 }
+
 .question-text {
   font-size: 1.5rem;
   line-height: 1.7;
@@ -293,11 +280,13 @@ function reset() {
   margin-bottom: 1.8rem;
   font-weight: 500;
 }
+
 .options {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
+
 .option {
   display: flex;
   align-items: center;
@@ -313,26 +302,32 @@ function reset() {
   text-align: left;
   color: var(--color-secondary);
 }
+
 .option:hover:not(:disabled) {
   border-color: var(--brand-color);
   background: var(--hover-fill);
 }
+
 .option.correct {
   border-color: #3dd68c;
   background: #e6faf2;
   color: #1daf6a;
 }
+
 .option.wrong {
   border-color: #ef4444;
   background: #fef2f2;
   color: #b91c1c;
 }
+
 .option:disabled {
   cursor: default;
 }
+
 .option.dimmed {
   opacity: 0.55;
 }
+
 .radio {
   width: 1.8rem;
   height: 1.8rem;
@@ -341,14 +336,17 @@ function reset() {
   flex-shrink: 0;
   transition: all 0.2s;
 }
+
 .radio.correct {
   border-color: #3dd68c;
   background: #3dd68c;
 }
+
 .radio.wrong {
   border-color: #ef4444;
   background: #ef4444;
 }
+
 .feedback {
   margin-top: 1.6rem;
   padding: 1.2rem 1.6rem;
@@ -356,14 +354,17 @@ function reset() {
   font-size: 1.3rem;
   line-height: 1.55;
 }
+
 .feedback.correct {
   background: #e6faf2;
   color: #1daf6a;
 }
+
 .feedback.wrong {
   background: #fef2f2;
   color: #b91c1c;
 }
+
 .next-btn {
   margin-top: 1.4rem;
   background: var(--brand-color);
@@ -378,13 +379,16 @@ function reset() {
   width: 100%;
   transition: opacity 0.15s;
 }
+
 .next-btn:hover {
   opacity: 0.88;
 }
+
 .final-screen {
   text-align: center;
   padding: 2rem 0;
 }
+
 .final-label {
   font-size: 1.3rem;
   color: var(--color-tertiary);
@@ -392,12 +396,14 @@ function reset() {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
 .final-score {
   font-size: 4.8rem;
   font-weight: 800;
   color: var(--brand-color);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
+
 .difficulty-path {
   margin-top: 1.8rem;
   padding: 1.2rem;
@@ -406,6 +412,7 @@ function reset() {
   font-size: 1.3rem;
   line-height: 1.6;
 }
+
 .path-dot {
   display: inline-block;
   width: 0.8rem;
@@ -413,15 +420,19 @@ function reset() {
   border-radius: 50%;
   margin: 0 0.4rem;
 }
+
 .path-dot.easy {
   background: #3dd68c;
 }
+
 .path-dot.medium {
   background: #f59e0b;
 }
+
 .path-dot.hard {
   background: #ef4444;
 }
+
 .path-legend {
   display: inline-flex;
   align-items: center;
@@ -430,6 +441,7 @@ function reset() {
   font-size: 1.1rem;
   color: var(--color-tertiary);
 }
+
 .reset-btn {
   margin-top: 1.6rem;
   background: var(--color-surface);
@@ -444,6 +456,7 @@ function reset() {
   width: 100%;
   transition: background 0.15s;
 }
+
 .reset-btn:hover {
   background: var(--hover-fill);
 }

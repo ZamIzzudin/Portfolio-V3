@@ -34,54 +34,42 @@ function goTo(idx: number) {
     <p class="gallery-subtitle">{{ subtitle }}</p>
 
     <div class="carousel-wrapper">
-      <button
-        class="carousel-nav carousel-prev"
-        :disabled="isAtStart"
-        :aria-label="'Previous slide'"
-        @click="prev"
-      >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button class="carousel-nav carousel-prev" :disabled="isAtStart" :aria-label="'Previous slide'" @click="prev">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
           <polyline points="12,4 6,10 12,16" />
         </svg>
       </button>
 
       <div class="carousel-viewport">
-        <div
-          class="carousel-track"
-          :style="{ transform: `translateX(-${currentIdx * 100}%)` }"
-        >
+        <div class="carousel-track" :style="{ transform: `translateX(-${currentIdx * 100}%)` }">
           <div v-for="(item, idx) in items" :key="idx" class="carousel-slide">
             <img :src="item.src" :alt="item.alt" loading="lazy" />
           </div>
         </div>
       </div>
 
-      <button
-        class="carousel-nav carousel-next"
-        :disabled="isAtEnd"
-        :aria-label="'Next slide'"
-        @click="next"
-      >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button class="carousel-nav carousel-next" :disabled="isAtEnd" :aria-label="'Next slide'" @click="next">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
           <polyline points="8,4 14,10 8,16" />
         </svg>
       </button>
     </div>
 
     <div v-if="items.length > 1" class="carousel-dots">
-      <button
-        v-for="(_, idx) in items"
-        :key="idx"
-        class="carousel-dot"
-        :class="{ active: idx === currentIdx }"
-        :aria-label="'Go to slide ' + (idx + 1)"
-        @click="goTo(idx)"
-      />
+      <button v-for="(_, idx) in items" :key="idx" class="carousel-dot" :class="{ active: idx === currentIdx }"
+        :aria-label="'Go to slide ' + (idx + 1)" @click="goTo(idx)" />
     </div>
   </div>
 </template>
 
 <style scoped>
+.section-title {
+  font-size: clamp(2.4rem, 3.6vw, 3.4rem);
+  margin-bottom: 2rem;
+}
+
 .gallery-section {
   padding: 6rem 0;
 }
@@ -184,6 +172,7 @@ function goTo(idx: number) {
     width: 3.6rem;
     height: 3.6rem;
   }
+
   .carousel-nav svg {
     width: 16px;
     height: 16px;

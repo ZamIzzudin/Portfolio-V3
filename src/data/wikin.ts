@@ -75,15 +75,19 @@ const wikinData: WikinPageData = {
       'Browse through the key screens that make Wikin feel intuitive and focused on what matters — your progress.',
     items: [
       {
-        src: '/screenshots/wikin-01.png',
+        src: '/screenshots/1.png',
         alt: 'Wikin dashboard overview',
       },
       {
-        src: '/screenshots/wikin-02.png',
+        src: '/screenshots/2.png',
         alt: 'Adaptive quiz session',
       },
       {
-        src: '/screenshots/wikin-03.png',
+        src: '/screenshots/3.png',
+        alt: 'Progress analytics dashboard',
+      },
+      {
+        src: '/screenshots/4.png',
         alt: 'Progress analytics dashboard',
       },
     ],
@@ -94,7 +98,7 @@ const wikinData: WikinPageData = {
     subtitle:
       'Stop guessing and start improving. Try Wikin now and see where your practice can take you.',
     buttonLabel: 'Visit Wikin',
-    buttonHref: 'https://wikin.app',
+    buttonHref: 'https://wikin.site',
   },
 }
 

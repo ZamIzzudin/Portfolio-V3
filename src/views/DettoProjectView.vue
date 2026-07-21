@@ -9,62 +9,12 @@ import LoveNoteStack from '@/components/detto/LoveNoteStack.vue'
 import NotificationTimeline from '@/components/detto/NotificationTimeline.vue'
 import MemoriesBentoGallery from '@/components/detto/MemoriesBentoGallery.vue'
 
+import dettoData from '@/data/detto'
+
 const router = useRouter()
 
-const techBadges = [
-  'Dating',
-  'Gallery',
-  'Archive',
-  'Moment',
-  'Whislist',
-  'Relationship',
-]
-
-const painPoints = [
-  {
-    title: 'Forgotten Moments',
-    desc: 'The small things that made you fall in love — inside jokes, first dates, meaningful conversations — disappear in endless message threads and scattered photos.',
-  },
-  {
-    title: 'Missed Important Dates',
-    desc: "Anniversaries pass unnoticed, date nights get forgotten, and promises made over coffee slip away because there's no gentle way to remember together.",
-  },
-  {
-    title: 'No Space Just for Two',
-    desc: "Everything shared between you lives in apps designed for everyone else — your personal photos mix with work presentations, your plans sit next to family obligations.",
-  },
-  {
-    title: 'Lost Story Together',
-    desc: "Without a dedicated place to document your journey, years of love and growth fade. You're building something beautiful together, but where does that story live?",
-  },
-]
-
-const coreFeatures = [
-  {
-    title: 'Private Room for Two',
-    desc: 'A space that feels intimate and exclusive. Only you and your partner can enter — creating a digital home for your relationship.',
-  },
-  {
-    title: 'Never Forget What Matters',
-    desc: 'Track anniversaries, date nights, and special occasions together. Gentle reminders keep you both present for the moments that matter.',
-  },
-  {
-    title: 'Notes That Feel Human',
-    desc: 'Leave sweet messages that fade naturally — like whispers between two people. They don\'t last forever, and that\'s exactly what makes them special.',
-  },
-  {
-    title: 'Dream Together',
-    desc: 'Build a shared wishlist of places to visit, things to try, and experiences you want to share. Turn wishes into plans, plans into memories.',
-  },
-  {
-    title: 'Your Story, Organized',
-    desc: 'Every photo tied to the moment it was captured — dates, places, and the feelings that made it special. Your gallery becomes your love story.',
-  },
-  {
-    title: 'Always Close',
-    desc: 'Install like an app, get notifications that matter. Detto stays with you throughout your day, keeping your relationship close even when you\'re apart.',
-  },
-]
+const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
+  dettoData
 
 </script>
 
@@ -79,10 +29,8 @@ const coreFeatures = [
             Detto
           </h1>
           <p class="project-tagline">
-            A shared, private space where couples plan dates, save photos to the moments they belong to, and watch their
-            relationship take shape as one continuous timeline — no feed, no algorithm, just the two of you and what
-            you`ve
-            built together. </p>
+            {{ tagline }}
+          </p>
           <div class="tech-badges">
             <span v-for="badge in techBadges" :key="badge" class="tech-badge">{{ badge }}</span>
           </div>
@@ -95,12 +43,12 @@ const coreFeatures = [
     <!-- The Problem -->
     <section class="section-space">
       <div class="container-wide">
-        <p class="section-label mb-[1.6rem]">Problem That We Faced</p>
+        <p class="section-label mb-[1.6rem]">{{ problem.label }}</p>
         <h2 class="heading-display section-title">
-          Why couples need a better<br />shared space
+          {{ problem.title }}
         </h2>
         <div class="pain-grid">
-          <div v-for="point in painPoints" :key="point.title" class="pain-card">
+          <div v-for="point in problem.painPoints" :key="point.title" class="pain-card">
             <h3 class="pain-title">{{ point.title }}</h3>
             <p class="pain-desc">{{ point.desc }}</p>
           </div>
@@ -111,18 +59,16 @@ const coreFeatures = [
     <!-- The Concept -->
     <section class="section-space concept-section">
       <div class="container-wide">
-        <p class="section-label mb-[1.6rem]">The Concept</p>
+        <p class="section-label mb-[1.6rem]">{{ concept.label }}</p>
         <h2 class="heading-display section-title">
-          A quiet, intimate space<br />built for two
+          {{ concept.title }}
         </h2>
         <div class="concept-box">
           <p class="concept-quote">
-            Detto represents what you've said to each other — promises made, moments shared, and the story only the two
-            of you truly understand.
+            {{ concept.quote }}
           </p>
           <p class="concept-desc">
-            Not another app to manage. A quiet corner of the digital world where your relationship lives — preserved,
-            celebrated, and always growing together.
+            {{ concept.desc }}
           </p>
         </div>
       </div>
@@ -131,10 +77,10 @@ const coreFeatures = [
     <!-- Core Features -->
     <section class="section-space features-section">
       <div class="container-wide">
-        <p class="section-label mb-[1.6rem]">Core Features</p>
-        <h2 class="heading-display section-title">What Detto actually does</h2>
+        <p class="section-label mb-[1.6rem]">{{ coreFeatures.label }}</p>
+        <h2 class="heading-display section-title">{{ coreFeatures.title }}</h2>
         <div class="features-grid">
-          <div v-for="feature in coreFeatures" :key="feature.title" class="feature-card">
+          <div v-for="feature in coreFeatures.items" :key="feature.title" class="feature-card">
             <h3 class="feature-card-title">{{ feature.title }}</h3>
             <p class="feature-card-desc">{{ feature.desc }}</p>
           </div>
@@ -145,31 +91,31 @@ const coreFeatures = [
     <!-- Live Interactive Demo -->
     <section class="section-space">
       <div class="container-wide text-center">
-        <p class="section-label mb-[1.6rem]">Showcase</p>
-        <h2 class="heading-display section-title">Try Detto in 60 seconds</h2>
+        <p class="section-label mb-[1.6rem]">{{ showcase.label }}</p>
+        <h2 class="heading-display section-title">{{ showcase.title }}</h2>
         <p class="section-subtitle">
-          Interactive demos showcasing the core features. Try them right here — all state is in-memory.
+          {{ showcase.subtitle }}
         </p>
       </div>
       <div class="demo-grid">
         <div class="demo-item">
-          <h2 class="heading-display mb-5">Plan moments that matter</h2>
+          <h2 class="heading-display mb-5">{{ showcase.demos[0].heading }}</h2>
           <p class="section-subtitle">
-            See your shared calendar in action. Date nights, anniversaries, and everything in between.
+            {{ showcase.demos[0].subtitle }}
           </p>
           <InteractiveCalendar />
         </div>
         <div class="demo-item">
-          <h2 class="heading-display mb-5">Never miss what's important</h2>
+          <h2 class="heading-display mb-5">{{ showcase.demos[1].heading }}</h2>
           <p class="section-subtitle">
-            Experience gentle reminders that keep you both present. No more forgotten dates or missed moments.
+            {{ showcase.demos[1].subtitle }}
           </p>
           <NotificationTimeline />
         </div>
         <div class="demo-item">
-          <h2 class="heading-display mb-5">Your love story, organized</h2>
+          <h2 class="heading-display mb-5">{{ showcase.demos[2].heading }}</h2>
           <p class="section-subtitle">
-            Browse memories linked to the moments they belong to. Every photo has context, nothing gets lost.
+            {{ showcase.demos[2].subtitle }}
           </p>
           <MemoriesBentoGallery />
         </div>
@@ -181,15 +127,14 @@ const coreFeatures = [
     <section class="section-space">
       <div class="container-wide text-center">
         <h2 class="heading-display cta-heading">
-          Build your love story together
+          {{ cta.heading }}
         </h2>
         <p class="cta-subtitle">
-          Start creating memories that last. Detto is designed for couples who want to stay connected, organized, and
-          present for each other.
+          {{ cta.subtitle }}
         </p>
         <div class="cta-actions">
-          <a href="https://detto.notu.dev" target="_blank" rel="noopener noreferrer" class="btn-primary">
-            Try Detto
+          <a :href="cta.buttonHref" target="_blank" rel="noopener noreferrer" class="btn-primary">
+            {{ cta.buttonLabel }}
           </a>
         </div>
       </div>
@@ -244,6 +189,7 @@ const coreFeatures = [
 .section-title {
   font-size: clamp(2.4rem, 3.6vw, 3.4rem);
   margin-bottom: 2rem;
+  white-space: pre-line;
 }
 
 .section-subtitle {

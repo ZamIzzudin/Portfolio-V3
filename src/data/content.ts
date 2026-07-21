@@ -46,8 +46,7 @@ export const featureBanners = [
     cta: 'Explore More',
     to: '/project/wikin',
     href: '',
-    image:
-      'https://cdn.synaps.media/naoto/content/images/2025/08/static-banner02.jpg',
+    image: '/banner/banner_wikin.png',
     reverse: false,
   },
   {
@@ -58,8 +57,7 @@ export const featureBanners = [
     cta: 'Explore More',
     to: '/project/detto',
     href: '',
-    image:
-      'https://cdn.synaps.media/naoto/content/images/2025/08/static-banner01.jpg',
+    image: '/banner/banner_detto.png',
     reverse: true,
   },
   {
@@ -68,8 +66,7 @@ export const featureBanners = [
     description:
       'Lightweight API Docs for Node.js Zero-config,  No YAML, no decorators, no setup files and will auto-discovers your routes, and serves a beautiful UI to explore and test your endpoints.',
     cta: 'Explore More',
-    to: '/project/wikin',
-    href: '',
+    href: 'https://yumerize.notu.dev/',
     image:
       'https://cdn.synaps.media/naoto/content/images/2025/08/static-banner02.jpg',
     reverse: false,
@@ -80,8 +77,7 @@ export const featureBanners = [
     description:
       'Trace state changes and capture all console.* output in a dedicated popup window with timestamps and file locations. Safe for production - logs are suppressed, states are no-ops.',
     cta: 'Explore More',
-    to: '/project/detto',
-    href: '',
+    href: 'https://findchange.notu.dev/',
     image:
       'https://cdn.synaps.media/naoto/content/images/2025/08/static-banner01.jpg',
     reverse: true,

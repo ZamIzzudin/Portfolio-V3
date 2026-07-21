@@ -139,7 +139,7 @@ function reset() {
 <style scoped>
 .grammar-demo {
   background: var(--color-surface);
-  border: 1px solid var(--color-divider);
+  border: 1px solid var(--brand-color);
   border-radius: var(--radius-lg);
   padding: 2.8rem;
 }

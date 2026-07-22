@@ -1,15 +1,25 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter, useRoute } from 'vue-router'
 import { navLinks } from '@/data/content'
 import { useTheme } from '@/composables/useTheme'
 
 const open = ref(false)
 const scrolled = ref(false)
 const { isDark, toggleTheme } = useTheme()
+const router = useRouter()
+const route = useRoute()
 
 function onScroll() {
   scrolled.value = window.scrollY > window.innerHeight
+}
+
+function handleNavClick(hash: string) {
+  if (route.path !== '/') {
+    router.push({ path: '/', hash })
+  } else {
+    document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth' })
+  }
 }
 
 onMounted(() => {
@@ -20,6 +30,14 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
 })
+
+const props = withDefaults(
+  defineProps<{
+    isPage?: boolean
+  }>(),
+  { isPage: false },
+)
+
 </script>
 
 <template>
@@ -27,9 +45,12 @@ onUnmounted(() => {
     <div class="container-wide site-header-inner">
       <nav class="nav-desktop" aria-label="Primary">
         <template v-for="link in navLinks" :key="link.label">
-          <RouterLink v-if="link.to" :to="link.to" class="nav-link">
+          <button v-if="link.to" type="button" class="nav-link" @click="handleNavClick(link.to)">
             {{ link.label }}
-          </RouterLink>
+          </button>
+          <a v-else-if="link.href" :href="link.href" class="nav-link">
+            {{ link.label }}
+          </a>
         </template>
       </nav>
 
@@ -71,9 +92,12 @@ onUnmounted(() => {
     <div v-if="open" class="mobile-menu">
       <nav class="container-wide" aria-label="Mobile">
         <template v-for="link in navLinks" :key="link.label">
-          <RouterLink v-if="link.to" :to="link.to" class="nav-link" @click="open = false">
+          <button v-if="link.to" type="button" class="nav-link" @click="handleNavClick(link.to); open = false">
             {{ link.label }}
-          </RouterLink>
+          </button>
+          <a v-else-if="link.href" :href="link.href" class="nav-link">
+            {{ link.label }}
+          </a>
         </template>
       </nav>
     </div>

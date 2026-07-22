@@ -130,7 +130,7 @@ const yumerizeData: YumerizePageData = {
       'Three lines of code, zero config files. Install Yumerize and your API documentation is ready before you finish your coffee.',
     buttonLabel: 'Try Yumerize',
     buttonLabel2: 'View on NPM',
-    buttonHref: 'https://github.com/NotuTeam/Yumerize',
+    buttonHref: 'https://yumerize.notu.dev/',
     buttonHref2: 'https://www.npmjs.com/package/yumerize',
   },
 }

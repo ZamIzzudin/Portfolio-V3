@@ -11,7 +11,7 @@ import FeatureBanners from '@/components/home/FeatureBanners.vue'
     <FeatureBanners />
 
     <!-- Contact Section -->
-    <section class="section-space bg-[var(--color-hero-bg)]">
+    <section class="section-space bg-[var(--color-hero-bg)]" id="contact">
       <div class="container-wide text-center">
         <h2 class="heading-display contact-title">
           Have a project in mind?

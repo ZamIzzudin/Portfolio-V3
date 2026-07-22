@@ -1,0 +1,11 @@
+# robots.txt for azzamizzudin.dev
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://azzamizzudin.dev/sitemap.xml
+
+# Disallow certain paths if needed
+# Disallow: /admin/
+# Disallow: /private/

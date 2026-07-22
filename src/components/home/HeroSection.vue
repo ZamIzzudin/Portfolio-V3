@@ -4,6 +4,10 @@ import SocialIcons from './SocialIcons.vue'
 import ButtonPlain from '../common/ButtonPlain.vue';
 
 import profilePhoto from '@/assets/pict/profile2.png'
+
+function handleGetInTouch() {
+  window.location.href = 'mailto:azzamizzudinhasan@gmail.com'
+}
 </script>
 
 <template>
@@ -20,7 +24,7 @@ import profilePhoto from '@/assets/pict/profile2.png'
             <p>{{ hero.paragraphs }}</p>
           </div>
         </div>
-        <ButtonPlain variant="primary" label="Get in Touch" size="sm" />
+        <ButtonPlain variant="primary" label="Get in Touch" size="sm" :action="handleGetInTouch" />
       </div>
 
       <div class="mt-[3.6rem]">

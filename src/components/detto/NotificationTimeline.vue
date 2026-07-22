@@ -347,6 +347,18 @@ onUnmounted(() => { if (playTimer) clearInterval(playTimer) })
   margin: 0 auto;
 }
 
+/* Dark mode support */
+.dark .detto-widget {
+  --accent: #fe6b5e;
+  --accent-soft: #fe6b5e33;
+  --bg: #1a1a1a;
+  --surface: #2a2a2a;
+  --surface-alt: #333333;
+  --text: #ffffff;
+  --text-sec: #b0b0b0;
+  --border: #444444;
+}
+
 .widget-header {
   margin-bottom: 16px;
 }
@@ -494,6 +506,10 @@ onUnmounted(() => { if (playTimer) clearInterval(playTimer) })
   transition: all 200ms;
 }
 
+.dark .slider-dot {
+  background: white;
+}
+
 .slider-dot.dismissed {
   width: 6px;
   height: 6px;
@@ -514,6 +530,10 @@ onUnmounted(() => { if (playTimer) clearInterval(playTimer) })
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   z-index: 1;
+}
+
+.dark .slider-thumb {
+  background: #ffffff;
 }
 
 .slider-input {
@@ -659,6 +679,11 @@ onUnmounted(() => { if (playTimer) clearInterval(playTimer) })
   box-shadow: 0 30px 60px rgba(16, 21, 18, 0.28);
   border: 1px solid var(--border);
   z-index: 1000;
+}
+
+.dark .notification-popup {
+  background: #2a2a2a;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
 }
 
 .popup-header {

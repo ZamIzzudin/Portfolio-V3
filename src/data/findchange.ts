@@ -130,7 +130,7 @@ const findchangeData: FindchangePageData = {
     subtitle:
       'One component, one hook, and you have a dedicated debug window that updates in real-time. Install Findchange and debug React apps the way they were meant to be debugged.',
     buttonLabel: 'Try FindChange',
-    buttonHref: 'https://github.com/NotuTeam/FindChange',
+    buttonHref: 'https://findchange.notu.dev/',
   },
 }
 

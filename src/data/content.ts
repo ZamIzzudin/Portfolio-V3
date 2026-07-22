@@ -68,8 +68,7 @@ export const featureBanners = [
     cta: 'Explore More',
     to: '/project/yumerize',
     href: '',
-    image:
-      'https://cdn.synaps.media/naoto/content/images/2025/08/static-banner02.jpg',
+    image: '/banner/banner_yumerize.png',
     reverse: false,
   },
   {
@@ -80,8 +79,7 @@ export const featureBanners = [
     cta: 'Explore More',
     to: '/project/findchange',
     href: '',
-    image:
-      'https://cdn.synaps.media/naoto/content/images/2025/08/static-banner01.jpg',
+    image: '/banner/banner_findchange.png',
     reverse: true,
   },
 ]
@@ -278,9 +276,9 @@ export const closing = {
 }
 
 export const navLinks = [
-  { label: 'My Work', to: '#project' },
-  { label: 'Blog', to: '#blog' },
-  { label: 'Contact', to: '#contact' },
+  { label: 'My Work', to: '#project', href: '/#project' },
+  // { label: 'Blog', to: '#blog' },
+  { label: 'Contact', to: '#contact', href: '/#contact' },
 ]
 
 export const footer = {

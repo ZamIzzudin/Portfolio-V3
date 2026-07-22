@@ -45,7 +45,7 @@ import FeatureBanners from '@/components/home/FeatureBanners.vue'
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--brand-color);
+  background: var(--color-primary);
   color: white;
   text-decoration: none;
   padding: clamp(0.8rem, 1.5vw, 1rem) clamp(1.8rem, 3vw, 2.4rem);

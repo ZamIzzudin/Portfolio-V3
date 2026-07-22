@@ -66,7 +66,8 @@ export const featureBanners = [
     description:
       'Lightweight API Docs for Node.js Zero-config,  No YAML, no decorators, no setup files and will auto-discovers your routes, and serves a beautiful UI to explore and test your endpoints.',
     cta: 'Explore More',
-    href: 'https://yumerize.notu.dev/',
+    to: '/project/yumerize',
+    href: '',
     image:
       'https://cdn.synaps.media/naoto/content/images/2025/08/static-banner02.jpg',
     reverse: false,
@@ -77,7 +78,8 @@ export const featureBanners = [
     description:
       'Trace state changes and capture all console.* output in a dedicated popup window with timestamps and file locations. Safe for production - logs are suppressed, states are no-ops.',
     cta: 'Explore More',
-    href: 'https://findchange.notu.dev/',
+    to: '/project/findchange',
+    href: '',
     image:
       'https://cdn.synaps.media/naoto/content/images/2025/08/static-banner01.jpg',
     reverse: true,
@@ -276,7 +278,8 @@ export const closing = {
 }
 
 export const navLinks = [
-  { label: 'My Works', to: '#project' },
+  { label: 'My Work', to: '#project' },
+  { label: 'Blog', to: '#blog' },
   { label: 'Contact', to: '#contact' },
 ]
 

@@ -97,7 +97,7 @@ const wikinData: WikinPageData = {
     heading: 'Ready to start preparing the right way?',
     subtitle:
       'Stop guessing and start improving. Try Wikin now and see where your practice can take you.',
-    buttonLabel: 'Visit Wikin',
+    buttonLabel: 'Try Wikin',
     buttonHref: 'https://wikin.site',
   },
 }

@@ -143,20 +143,6 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
 </template>
 
 <style scoped>
-.back-link {
-  display: inline-block;
-  font-size: 1.4rem;
-  font-weight: 500;
-  color: var(--color-secondary);
-  text-decoration: none;
-  margin-bottom: 1.6rem;
-  transition: color var(--duration) var(--ease-out);
-}
-
-.back-link:hover {
-  color: var(--color-primary);
-}
-
 .project-title {
   font-size: clamp(3.2rem, 5.5vw, 4.8rem);
   margin-bottom: 1.6rem;
@@ -406,21 +392,6 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
 }
 
 .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   background: var(--accent);
-  color: white;
-  text-decoration: none;
-  padding: clamp(0.8rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
-  border-radius: 9999px;
-  font-size: clamp(1.2rem, 1.5vw, 1.5rem);
-  font-weight: 600;
-  transition: opacity 0.15s;
-  font-family: var(--font-sans);
-}
-
-.btn-primary:hover {
-  opacity: 0.88;
 }
 </style>

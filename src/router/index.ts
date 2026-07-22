@@ -21,10 +21,16 @@ const routes: RouteRecordRaw[] = [
     meta: { title: 'Detto — A Small Space for Your Story, Together' },
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('@/views/AboutView.vue'),
-    meta: { title: 'About · Naoto' },
+    path: '/project/yumerize',
+    name: 'project-yumerize',
+    component: () => import('@/views/YumerizeProjectView.vue'),
+    meta: { title: 'Yumerize — Lightweight API Docs & Hitter for Node.js' },
+  },
+  {
+    path: '/project/findchange',
+    name: 'project-findchange',
+    component: () => import('@/views/FindchangeProjectView.vue'),
+    meta: { title: 'Findchange — React State Watcher & Console Capture Tool' },
   },
   {
     path: '/:pathMatch(.*)*',

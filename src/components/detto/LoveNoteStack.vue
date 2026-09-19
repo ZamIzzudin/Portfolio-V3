@@ -66,7 +66,10 @@ let tickTimer: ReturnType<typeof setInterval> | null = null
 
 /* ---- Swipe tracking ---- */
 const swipeX = ref(0)
+const startX = ref(0)
 const isSwiping = ref(false)
+const isLeaving = ref(false)
+let leaveTimer: ReturnType<typeof setTimeout> | null = null
 
 /* ---- Load ---- */
 function loadNotes() {
@@ -86,14 +89,33 @@ watch(notes, (val) => {
 /* ---- Computed ---- */
 const activeNote = computed(() => notes.value[activeIndex.value] ?? null)
 
+/** Kartu di belakang kartu aktif — note berikutnya yang terungkap setelah swipe */
+const peekNotes = computed(() => {
+  const count = Math.min(notes.value.length - 1, 2)
+  return Array.from({ length: count }, (_, i) => notes.value[(activeIndex.value + i + 1) % notes.value.length])
+})
+
+/** Transform kartu aktif: ikuti jari saat drag, melayang keluar saat dismiss */
+const cardStyle = computed(() => ({
+  transform: `translateX(${swipeX.value}px) rotate(${swipeX.value / 24}deg)`,
+  opacity: isLeaving.value ? 0 : 1 - Math.min(Math.abs(swipeX.value) / 300, 0.4),
+  zIndex: Math.min(notes.value.length, 3) + 1,
+}))
+
 /* ---- Actions ---- */
-function goNext() {
-  if (notes.value.length === 0) return
-  activeIndex.value = (activeIndex.value + 1) % notes.value.length
-}
-function goPrev() {
-  if (notes.value.length === 0) return
-  activeIndex.value = (activeIndex.value - 1 + notes.value.length) % notes.value.length
+function dismissActive() {
+  const note = activeNote.value
+  if (!note) return
+  isLeaving.value = true
+  swipeX.value = swipeX.value > 0 ? 480 : -480
+  leaveTimer = setTimeout(() => {
+    notes.value = notes.value.filter(n => n.id !== note.id)
+    if (activeIndex.value >= notes.value.length) {
+      activeIndex.value = Math.max(0, notes.value.length - 1)
+    }
+    isLeaving.value = false
+    swipeX.value = 0
+  }, 320)
 }
 
 function addDummyNote() {
@@ -113,16 +135,23 @@ function addDummyNote() {
 }
 
 /* ---- Swipe ---- */
-function onPointerDown(e: PointerEvent) { isSwiping.value = true; swipeX.value = 0 }
+function onPointerDown(e: PointerEvent) {
+  if (isLeaving.value) return
+  startX.value = e.clientX
+  swipeX.value = 0
+  isSwiping.value = true
+  // Tangkap pointer agar drag tetap terlacak walau jari keluar dari kartu
+  ;(e.currentTarget as HTMLElement | null)?.setPointerCapture?.(e.pointerId)
+}
 function onPointerMove(e: PointerEvent) {
-  if (!isSwiping.value) return
-  swipeX.value = e.clientX - (e as any).startX
+  if (!isSwiping.value || isLeaving.value) return
+  swipeX.value = e.clientX - startX.value
 }
 function onPointerUp() {
-  if (swipeX.value < -SWIPE_THRESHOLD) goNext()
-  else if (swipeX.value > SWIPE_THRESHOLD) goPrev()
+  if (!isSwiping.value || isLeaving.value) return
   isSwiping.value = false
-  swipeX.value = 0
+  if (Math.abs(swipeX.value) > SWIPE_THRESHOLD) dismissActive()
+  else swipeX.value = 0
 }
 
 /* ---- Lifecycle ---- */
@@ -130,7 +159,10 @@ onMounted(() => {
   loadNotes()
   tickTimer = setInterval(() => { now.value = Date.now() }, 30_000)
 })
-onUnmounted(() => { if (tickTimer) clearInterval(tickTimer) })
+onUnmounted(() => {
+  if (tickTimer) clearInterval(tickTimer)
+  if (leaveTimer) clearTimeout(leaveTimer)
+})
 
 /* ---- Prune expired ---- */
 watch(now, () => {
@@ -147,7 +179,7 @@ watch(now, () => {
     <!-- Header -->
     <div class="widget-header">
       <h3 class="widget-title">Say something short</h3>
-      <p class="widget-desc">Each note disappears after a while. Swipe to read the next one.</p>
+      <p class="widget-desc">Each note disappears after a while. Swipe one away to clear it from the stack.</p>
     </div>
 
     <div v-if="notes.length === 0" class="empty-row">
@@ -162,30 +194,23 @@ watch(now, () => {
       <!-- Card stack -->
       <div class="stack-area">
         <!-- Peek cards behind -->
-        <div v-for="offset in Math.min(notes.length - 1, 2)"
-          :key="`bg-${notes[(activeIndex + Math.min(notes.length, 3) - 1 - (offset - 1)) % notes.length]?.id}`"
-          class="peek-card" :style="{
-            transform: `translateY(${offset * 10}px) translateX(${offset * 6}px) scale(${1 - offset * 0.04})`,
-            opacity: 1 - offset * 0.3,
-            zIndex: Math.min(notes.length, 3) - offset,
-          }">
+        <div v-for="(note, i) in peekNotes" :key="`bg-${note.id}`" class="peek-card" :style="{
+          transform: `translateY(${(i + 1) * 10}px) translateX(${(i + 1) * 6}px) scale(${1 - (i + 1) * 0.04})`,
+          opacity: 1 - (i + 1) * 0.3,
+          zIndex: Math.min(notes.length, 3) - (i + 1),
+        }">
           <div class="peek-inner">
-            <div class="peek-avatar"
-              :style="{ background: notes[(activeIndex + Math.min(notes.length, 3) - 1 - (offset - 1)) % notes.length]?.color }">
-              {{ notes[(activeIndex + Math.min(notes.length, 3) - 1 - (offset - 1)) %
-                notes.length]?.author?.charAt(0).toUpperCase() }}
+            <div class="peek-avatar" :style="{ background: note.color }">
+              {{ note.author.charAt(0).toUpperCase() }}
             </div>
-            <span class="peek-author">{{ notes[(activeIndex + Math.min(notes.length, 3) - 1 - (offset - 1)) %
-              notes.length]?.author }}</span>
+            <span class="peek-author">{{ note.author }}</span>
           </div>
         </div>
 
-        <!-- Active card -->
-        <div v-if="activeNote" class="swipe-card" :style="{
-          transform: `translateX(${swipeX}px) rotate(${swipeX / 25}deg)`,
-          zIndex: Math.min(notes.length, 3) + 1,
-        }" @pointerdown="onPointerDown" @pointermove="onPointerMove" @pointerup="onPointerUp"
-          @pointerleave="onPointerUp">
+        <!-- Active card (:key me-remount elemen saat note berganti, agar tidak ada animasi fly-in liar) -->
+        <div v-if="activeNote" :key="activeNote.id" class="swipe-card" :class="{ dragging: isSwiping }"
+          :style="cardStyle" @pointerdown="onPointerDown" @pointermove="onPointerMove" @pointerup="onPointerUp"
+          @pointercancel="onPointerUp">
           <div class="note-card">
             <div class="note-top">
               <div class="note-author-area">
@@ -203,9 +228,9 @@ watch(now, () => {
             <p class="note-message">{{ activeNote.message }}</p>
           </div>
 
-          <!-- Swipe indicators -->
+          <!-- Swipe indicator -->
           <div v-if="Math.abs(swipeX) > 20" class="swipe-indicator" :class="{ left: swipeX > 0, right: swipeX < 0 }">
-            {{ swipeX > 0 ? 'Prev' : 'Next' }}
+            dismiss
           </div>
         </div>
       </div>
@@ -217,7 +242,7 @@ watch(now, () => {
         </div>
         <button class="add-btn" @click="addDummyNote">+</button>
       </div>
-      <p class="swipe-hint italic">swipe to read others</p>
+      <p class="swipe-hint italic">swipe a note away to dismiss it</p>
     </template>
 
   </div>
@@ -349,7 +374,15 @@ watch(now, () => {
   cursor: grab;
   touch-action: pan-y;
   user-select: none;
-  transition: transform 50ms ease;
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 320ms ease-out;
+}
+
+/* Saat digendong jari/kursor: ikut 1:1 tanpa easing */
+.swipe-card.dragging {
+  cursor: grabbing;
+  transition: none;
 }
 
 .note-card {

@@ -4,7 +4,9 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
+
   <section class="pb-[var(--section-space)]" id="project">
+
     <div class="container-wide space-y-[clamp(5.6rem,8vw,9.6rem)]">
       <article v-for="(banner, index) in featureBanners" :key="index" class="feature-banner"
         :class="{ reverse: banner.reverse }">

@@ -3,41 +3,35 @@ import { useRouter } from 'vue-router'
 
 import AppNavbar from '@/components/app/AppNavbar.vue'
 import ButtonPlain from '@/components/common/ButtonPlain.vue'
+import GuestCamera from '@/components/nalla/GuestCamera.vue'
+import ThemePickerDemo from '@/components/nalla/ThemePickerDemo.vue'
+import RsvpLoopDemo from '@/components/nalla/RsvpLoopDemo.vue'
+import CheckinLoopDemo from '@/components/nalla/CheckinLoopDemo.vue'
 
-import InteractiveCalendar from '@/components/detto/InteractiveCalendar.vue'
-import LoveNoteStack from '@/components/detto/LoveNoteStack.vue'
-import NotificationTimeline from '@/components/detto/NotificationTimeline.vue'
-import MemoriesBentoGallery from '@/components/detto/MemoriesBentoGallery.vue'
-
-import dettoData from '@/data/detto'
+import nallaData from '@/data/nalla'
 
 const router = useRouter()
 
-const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
-  dettoData
-
+const { tagline, techBadges, problem, concept, coreFeatures, experience, showcase, cta } =
+  nallaData
 </script>
 
 <template>
-  <section>
+  <section class="project-nalla">
     <div class="container-wide py-[2rem]">
       <ButtonPlain :action="() => router.push('/')" label="&larr;" :rounded="false" size="sm" />
       <p class="section-label my-[2rem]">My Work</p>
-      <div class="flex gap-5 items-center flex-col lg:flex-row">
-        <div class="text-left w-full lg:w-auto">
-          <h1 class=" heading-display project-title">
-            Detto
-          </h1>
-          <p class="project-tagline">
-            {{ tagline }}
-          </p>
-          <div class="tech-badges">
-            <span v-for="badge in techBadges" :key="badge" class="tech-badge">{{ badge }}</span>
-          </div>
-        </div>
-        <LoveNoteStack />
+      <h1 class="heading-display project-title">
+        Nalla
+      </h1>
+      <p class="project-tagline">
+        {{ tagline }}
+      </p>
+      <div class="tech-badges">
+        <span v-for="badge in techBadges" :key="badge" class="tech-badge">{{ badge }}</span>
       </div>
     </div>
+
     <AppNavbar />
 
     <!-- The Problem -->
@@ -88,38 +82,70 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
       </div>
     </section>
 
-    <!-- Live Interactive Demo -->
+    <!-- The Experience -->
     <section class="section-space">
       <div class="container-wide text-center">
-        <p class="section-label mb-[1.6rem]">{{ showcase.label }}</p>
-        <h2 class="heading-display section-title">{{ showcase.title }}</h2>
+        <p class="section-label mb-[1.6rem]">{{ experience.label }}</p>
+        <h2 class="heading-display section-title">{{ experience.title }}</h2>
         <p class="section-subtitle">
-          {{ showcase.subtitle }}
+          {{ experience.subtitle }}
         </p>
+        <div class="phase-grid">
+          <div v-for="(phase, index) in experience.phases" :key="phase.title" class="phase-card">
+            <span class="phase-step">{{ String(index + 1).padStart(2, '0') }}</span>
+            <h3 class="phase-title">{{ phase.title }}</h3>
+            <p class="phase-desc">{{ phase.desc }}</p>
+          </div>
+        </div>
       </div>
-      <div class="demo-grid">
-        <div class="demo-item">
-          <h2 class="heading-display mb-5">{{ showcase.demos[0].heading }}</h2>
-          <p class="section-subtitle">
-            {{ showcase.demos[0].subtitle }}
-          </p>
-          <InteractiveCalendar />
-        </div>
-        <div class="demo-item">
-          <h2 class="heading-display mb-5">{{ showcase.demos[1].heading }}</h2>
-          <p class="section-subtitle">
-            {{ showcase.demos[1].subtitle }}
-          </p>
-          <NotificationTimeline />
-        </div>
-        <div class="demo-item">
-          <h2 class="heading-display mb-5">{{ showcase.demos[2].heading }}</h2>
-          <p class="section-subtitle">
-            {{ showcase.demos[2].subtitle }}
-          </p>
-          <MemoriesBentoGallery />
+    </section>
+
+    <!-- Interactive Demos -->
+    <section class="section-space demos-section">
+      <div class="container-wide">
+        <div class="text-center">
+          <p class="section-label mb-[1.6rem]">{{ showcase.label }}</p>
+          <h2 class="heading-display section-title">{{ showcase.title }}</h2>
+          <p class="section-subtitle mx-auto!">{{ showcase.subtitle }}</p>
         </div>
 
+        <div class="demos-grid">
+          <!-- Golden Moment — kamera tamu (interaktif) -->
+          <div class="demo-block">
+            <div class="demo-stage demo-stage-tall">
+              <GuestCamera />
+            </div>
+            <h3 class="demo-heading">{{ showcase.demos[0].heading }}</h3>
+            <p class="demo-subtitle">{{ showcase.demos[0].subtitle }}</p>
+          </div>
+
+          <!-- Koleksi tema (interaktif) -->
+          <div class="demo-block">
+            <div class="demo-stage">
+              <ThemePickerDemo />
+            </div>
+            <h3 class="demo-heading">{{ showcase.demos[1].heading }}</h3>
+            <p class="demo-subtitle">{{ showcase.demos[1].subtitle }}</p>
+          </div>
+
+          <!-- RSVP real-time (loop otomatis) -->
+          <div class="demo-block">
+            <div class="demo-stage">
+              <RsvpLoopDemo />
+            </div>
+            <h3 class="demo-heading">{{ showcase.demos[2].heading }}</h3>
+            <p class="demo-subtitle">{{ showcase.demos[2].subtitle }}</p>
+          </div>
+
+          <!-- QR check-in (loop otomatis) -->
+          <div class="demo-block">
+            <div class="demo-stage demo-stage-tall">
+              <CheckinLoopDemo />
+            </div>
+            <h3 class="demo-heading">{{ showcase.demos[3].heading }}</h3>
+            <p class="demo-subtitle">{{ showcase.demos[3].subtitle }}</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -143,6 +169,25 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
 </template>
 
 <style scoped>
+/* ---- Palet brand Nalla pada halaman ini ----
+   Porto memakai brand ungu (#6c49b6) global; ganti dengan brand nalla:
+   ink hijau tua + aksen emas. Token di-override di root section sehingga
+   semua komponen turunan (badge, fase, tombol) ikut berganti. */
+.project-nalla {
+  --brand-color: #2b3a33;
+  --brand-color-transparent: #2b3a3330;
+  --accent: #c99a3e;
+  --accent-soft: #e8c065;
+}
+
+/* Mode gelap: ink tak terbaca di latar gelap — gunakan emas sebagai brand */
+html.dark .project-nalla {
+  --brand-color: #e8c065;
+  --brand-color-transparent: #e8c06530;
+  --accent: #e8c065;
+  --accent-soft: #f0d99a;
+}
+
 .project-title {
   font-size: clamp(3.2rem, 5.5vw, 4.8rem);
   margin-bottom: 1.6rem;
@@ -168,8 +213,8 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
   font-weight: 500;
   padding: 0.45rem 1rem;
   border-radius: 9999px;
-  background: color-mix(in srgb, var(--accent-soft) 12%, transparent);
-  color: var(--accent);
+  background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+  color: var(--brand-color);
 }
 
 .section-title {
@@ -201,6 +246,7 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
 .pain-card {
   border-top: 1px solid var(--color-divider);
   padding-top: 2.4rem;
+  text-align: left;
 }
 
 .pain-title {
@@ -225,8 +271,9 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
 
 .concept-box {
   margin-top: 5.6rem;
-  border-left: 2px solid var(--color-primary);
+  border-left: 2px solid var(--brand-color);
   padding-left: 2.4rem;
+  text-align: left;
 }
 
 .concept-quote {
@@ -270,6 +317,7 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
 .feature-card {
   border-top: 1px solid var(--color-divider);
   padding-top: 2.4rem;
+  text-align: left;
 }
 
 .feature-card-title {
@@ -286,93 +334,107 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
   color: var(--color-secondary);
 }
 
-.principle-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.principle-list li {
-  font-size: 1.45rem;
-  line-height: 1.55;
-  color: var(--color-secondary);
-}
-
-.principle-list strong {
-  color: var(--color-primary);
-}
-
-/* Demo */
-.demo-grid {
+/* Experience phases */
+.phase-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
-  padding-top: 2rem;
-  padding-left: 2rem;
-  padding-right: 1rem;
+  gap: 2.4rem;
+  margin-top: 0.8rem;
+  text-align: left;
 }
 
-@media (min-width: 768px) {
-  .demo-grid {
+@media (min-width: 640px) {
+  .phase-grid {
     grid-template-columns: repeat(2, 1fr);
-    padding-left: 5rem;
-    padding-right: 5rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .demo-grid {
+  .phase-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.demo-item {
+.phase-card {
+  border-top: 1px solid var(--color-divider);
+  padding-top: 2.4rem;
+}
+
+.phase-step {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--brand-color);
+  margin-bottom: 1rem;
+}
+
+.phase-title {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.phase-desc {
+  margin: 1.2rem 0 0;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  line-height: 1.55;
+  color: var(--color-secondary);
+}
+
+/* Interactive demos */
+.demos-section {
+  background: var(--color-hero-bg);
+}
+
+.demos-grid {
+  display: grid;
+  gap: 3.2rem 2.4rem;
+}
+
+@media (min-width: 768px) {
+  .demos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.demo-block {
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
-.demo-item .section-subtitle {
-  margin-bottom: 2rem;
-}
-
-.demo-tabs {
+.demo-stage {
+  flex: 1;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-bottom: 2.4rem;
-}
-
-.demo-tab {
-  padding: 0.8rem 1.4rem;
-  border-radius: 9999px;
+  align-items: center;
+  justify-content: center;
+  padding: 3.2rem 2rem;
   border: 1px solid var(--color-divider);
+  border-radius: var(--radius-lg);
   background: var(--color-surface);
-  font-size: 1.3rem;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: var(--font-sans);
+}
+
+.demo-heading {
+  margin: 2rem 0 0;
+  font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.demo-subtitle {
+  max-width: 40rem;
+  margin: 1rem auto 0;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  line-height: 1.55;
   color: var(--color-secondary);
-  transition: all 0.15s;
-}
-
-.demo-tab:hover {
-  background: var(--hover-fill);
-  color: var(--color-primary);
-}
-
-.demo-tab.active {
-  background: var(--accent-soft);
-  color: white;
-  border-color: var(--accent-soft);
 }
 
 /* Bottom CTA */
 .cta-heading {
   font-size: clamp(2.4rem, 4vw, 3.6rem);
   margin: 0;
+  white-space: pre-line;
 }
 
 .cta-subtitle {
@@ -392,6 +454,6 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
 }
 
 .btn-primary {
-  background: var(--accent);
+  background: var(--brand-color);
 }
 </style>

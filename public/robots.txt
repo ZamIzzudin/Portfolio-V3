@@ -1,10 +1,10 @@
-# robots.txt for azzamizzudin.dev
+# robots.txt for zamizzudin.vercel.app
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://azzamizzudin.dev/sitemap.xml
+Sitemap: https://zamizzudin.vercel.app/sitemap.xml
 
 # Disallow certain paths if needed
 # Disallow: /admin/

@@ -435,6 +435,22 @@ a {
   border-radius: 999px;
 }
 
+/* Mobile — turunkan skala semua tombol ke ukuran btn-sm (referensi: tombol
+   "Get in Touch" di hero), agar CTA tidak terlihat terlalu besar di layar sempit.
+   Ditempatkan setelah size modifiers supaya menimpa .btn-md. .btn-lg sengaja
+   dikecualikan agar tetap besar bila memang diminta eksplisit. */
+@media (max-width: 600px) {
+  .btn-primary:not(.btn-lg),
+  .btn-secondary:not(.btn-lg),
+  .btn-ghost:not(.btn-lg),
+  .btn-plain:not(.btn-lg),
+  .btn-outline:not(.btn-lg) {
+    min-height: 3.6rem;
+    padding: 0.6rem 1.4rem;
+    font-size: 1.25rem;
+  }
+}
+
 /* -------------------------------------------------------------------------- */
 /* Social pills                                                               */
 /* -------------------------------------------------------------------------- */
@@ -729,13 +745,15 @@ a {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (min-width: 640px) {
   .footer-bottom {
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
   }
 }
 
@@ -750,14 +768,43 @@ a {
 /* -------------------------------------------------------------------------- */
 .feature-banner {
   display: grid;
-  gap: 3.2rem;
+  gap: 0;
   align-items: center;
+}
+
+/* Mobile: susunan eyebrow+title → banner → description → CTA.
+   .feature-banner-copy dibuka (display: contents) agar anak-anaknya menjadi
+   grid item, lalu diurutkan via order dengan banner di tengah. Spacing memakai
+   margin anak-anaknya (eyebrow mb / desc mt / cta mt) plus margin-top banner. */
+.feature-banner-copy {
+  display: contents;
+}
+
+.feature-banner-copy > :nth-child(-n + 2) {
+  order: 1;
+}
+
+.feature-banner-media {
+  order: 2;
+  margin-top: 3.2rem;
+}
+
+.feature-banner-copy > :nth-child(n + 3) {
+  order: 3;
 }
 
 @media (min-width: 900px) {
   .feature-banner {
     grid-template-columns: 1fr 1fr;
     gap: 5.6rem;
+  }
+
+  .feature-banner-copy {
+    display: block;
+  }
+
+  .feature-banner-media {
+    margin-top: 0;
   }
 
   .feature-banner.reverse .feature-banner-copy {

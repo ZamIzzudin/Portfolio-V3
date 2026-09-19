@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
-import { RouterLink, useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { navLinks } from '@/data/content'
 import { useTheme } from '@/composables/useTheme'
 
@@ -31,13 +31,6 @@ onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
 })
 
-const props = withDefaults(
-  defineProps<{
-    isPage?: boolean
-  }>(),
-  { isPage: false },
-)
-
 </script>
 
 <template>
@@ -55,12 +48,6 @@ const props = withDefaults(
       </nav>
 
       <div class="nav-actions">
-        <button type="button" class="nav-icon-btn" aria-label="Search" title="Search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-            <circle cx="11" cy="11" r="7" />
-            <path d="M20 20l-3.4-3.4" stroke-linecap="round" />
-          </svg>
-        </button>
 
         <button type="button" class="nav-icon-btn" :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
           :title="isDark ? 'Light mode' : 'Dark mode'" @click="toggleTheme">

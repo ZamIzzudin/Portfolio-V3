@@ -1,17 +1,34 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
+/** Base URL produksi — ganti di sini kalau nanti pakai custom domain */
+const SITE_URL = 'https://zamizzudin.vercel.app'
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
     component: () => import('@/views/HomeView.vue'),
     meta: {
-      title: 'Azzam Izzudin Hasan - Web Developer & Portfolio',
-      description: 'Azzam Izzudin Hasan - Web Developer specializing in Vue.js, React, Node.js. Explore projects like Wikin, Detto, Yumerize, and FindChange.',
-      image: 'https://azzamizzudin.dev/og-image.png',
-      url: 'https://azzamizzudin.dev/',
-      type: 'website'
+      title: 'Azzam Izzudin Hasan - Fullstack Developer & Portfolio',
+      description:
+        'Azzam Izzudin Hasan - Fullstack Developer specializing in Vue.js, React, Node.js. Explore projects like NicheU, Wikin, Detto, Nalla, Yumerize, and FindChange.',
+      image: SITE_URL + '/og-image.png',
+      url: SITE_URL + '/',
+      type: 'website',
+    },
+  },
+  {
+    path: '/project/nicheu',
+    name: 'project-nicheu',
+    component: () => import('@/views/NicheuProjectView.vue'),
+    meta: {
+      title: 'NicheU — Daily AI WhatsApp Agent',
+      description:
+        'A personal AI agent that lives inside WhatsApp — with a self-defined persona, long-term memory, a daily routine, and the ability to message you first.',
+      image: SITE_URL + '/og-image.png',
+      url: SITE_URL + '/project/nicheu',
+      type: 'article',
     },
   },
   {
@@ -20,21 +37,36 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/WikinProjectView.vue'),
     meta: {
       title: 'Wikin — AI-Powered TOEFL & IELTS Simulator',
-      description: 'Wikin helps you prepare with AI-powered simulations, actionable performance insights, and flexible IELTS/TOEFL pathways tailored to your goals.',
-      image: 'https://azzamizzudin.dev/og-image.png',
-      url: 'https://azzamizzudin.dev/project/wikin',
-      type: 'article'
+      description:
+        'Wikin helps you prepare with AI-powered simulations, actionable performance insights, and flexible IELTS/TOEFL pathways tailored to your goals.',
+      image: SITE_URL + '/og-image.png',
+      url: SITE_URL + '/project/wikin',
+      type: 'article',
     },
   },
+
   {
     path: '/project/detto',
     name: 'project-detto',
     component: () => import('@/views/DettoProjectView.vue'),
     meta: {
       title: 'Detto — A Small Space for Your Story, Together',
-      description: 'A shared, private space where couples plan dates, save photos to the moments they belong to, and watch their relationship take shape as one continuous timeline.',
-      image: 'https://azzamizzudin.dev/og-image.png',
-      url: 'https://azzamizzudin.dev/project/detto',
+      description:
+        'A shared, private space where couples plan dates, save photos to the moments they belong to, and watch their relationship take shape as one continuous timeline.',
+      image: SITE_URL + '/og-image.png',
+      url: SITE_URL + '/project/detto',
+      type: 'article',
+    },
+  },
+  {
+    path: '/project/nalla',
+    name: 'project-nalla',
+    component: () => import('@/views/NallaProjectView.vue'),
+    meta: {
+      title: 'Nalla — Digital Wedding Invitation Platform',
+      description: 'A curated digital wedding invitation platform — personalized WhatsApp delivery, a real-time RSVP dashboard, QR guest check-in, and a guest-camera photobook, in one elegant flow.',
+      image: SITE_URL + '/og-image.png',
+      url: SITE_URL + '/project/nalla',
       type: 'article'
     },
   },
@@ -44,10 +76,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/YumerizeProjectView.vue'),
     meta: {
       title: 'Yumerize — Lightweight API Docs & Hitter for Node.js',
-      description: 'Lightweight API Docs for Node.js Zero-config, No YAML, no decorators, no setup files and will auto-discovers your routes, and serves a beautiful UI to explore and test your endpoints.',
-      image: 'https://azzamizzudin.dev/og-image.png',
-      url: 'https://azzamizzudin.dev/project/yumerize',
-      type: 'article'
+      description:
+        'Lightweight API Docs for Node.js Zero-config, No YAML, no decorators, no setup files and will auto-discovers your routes, and serves a beautiful UI to explore and test your endpoints.',
+      image: SITE_URL + '/og-image.png',
+      url: SITE_URL + '/project/yumerize',
+      type: 'article',
     },
   },
   {
@@ -56,10 +89,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/FindchangeProjectView.vue'),
     meta: {
       title: 'Findchange — React State Watcher & Console Capture Tool',
-      description: 'Trace state changes and capture all console.* output in a dedicated popup window with timestamps and file locations. Safe for production.',
-      image: 'https://azzamizzudin.dev/og-image.png',
-      url: 'https://azzamizzudin.dev/project/findchange',
-      type: 'article'
+      description:
+        'Trace state changes and capture all console.* output in a dedicated popup window with timestamps and file locations. Safe for production.',
+      image: SITE_URL + '/og-image.png',
+      url: SITE_URL + '/project/findchange',
+      type: 'article',
     },
   },
   {
@@ -69,10 +103,10 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: '404 - Page Not Found',
       description: 'The page you are looking for does not exist.',
-      image: 'https://azzamizzudin.dev/og-image.png',
-      url: 'https://azzamizzudin.dev/404',
+      image: SITE_URL + '/og-image.png',
+      url: SITE_URL + '/404',
       type: 'website',
-      robots: 'noindex'
+      robots: 'noindex',
     },
   },
 ]
@@ -122,7 +156,11 @@ router.afterEach((to) => {
   updateJsonLd(to)
 })
 
-function updateMetaTag(name: string, content: string, type: 'name' | 'property' = 'name') {
+function updateMetaTag(
+  name: string,
+  content: string,
+  type: 'name' | 'property' = 'name',
+) {
   let element = document.querySelector(`meta[${type}="${name}"]`)
   if (!element) {
     element = document.createElement('meta')
@@ -153,19 +191,27 @@ function updateJsonLd(route: any) {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Azzam Izzudin Hasan',
-    jobTitle: 'Web Developer',
+    jobTitle: 'Fullstack Developer',
     email: 'azzamizzudinhasan@gmail.com',
-    url: 'https://azzamizzudin.dev/',
+    url: SITE_URL + '/',
+    image: SITE_URL + '/apple-touch-icon.png',
     sameAs: [
       'https://www.linkedin.com/in/azzam-izzudin-hasan/',
       'https://github.com/ZamIzzudin',
       'https://discord.com/users/533661901977026580',
       'https://x.com/KakUdinnn',
-      'https://www.instagram.com/hasanizzud',
-      'https://www.threads.com/@hasanizzud',
+      'https://www.instagram.com/ayamiyudin',
+      'https://www.threads.com/@wikinsayt',
     ],
-    description: 'Web Developer specializing in Vue.js, React, Node.js',
-    knowsAbout: ['Vue.js', 'React', 'Node.js', 'TypeScript', 'Tailwind CSS', 'JavaScript'],
+    description: 'Fullstack Developer specializing in Vue.js, React, Node.js',
+    knowsAbout: [
+      'Vue.js',
+      'React',
+      'Node.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'JavaScript',
+    ],
   }
 
   const script = document.createElement('script')
@@ -183,7 +229,7 @@ function updateJsonLd(route: any) {
       author: {
         '@type': 'Person',
         name: 'Azzam Izzudin Hasan',
-        url: 'https://azzamizzudin.dev/',
+        url: SITE_URL + '/',
       },
     }
     script.textContent = JSON.stringify([baseSchema, projectSchema])

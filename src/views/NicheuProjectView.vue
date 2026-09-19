@@ -3,19 +3,33 @@ import { useRouter } from 'vue-router'
 
 import AppNavbar from '@/components/app/AppNavbar.vue'
 import ButtonPlain from '@/components/common/ButtonPlain.vue'
+import AgentFlowDiagram from '@/components/nicheu/AgentFlowDiagram.vue'
 
-import InteractiveCalendar from '@/components/detto/InteractiveCalendar.vue'
-import LoveNoteStack from '@/components/detto/LoveNoteStack.vue'
-import NotificationTimeline from '@/components/detto/NotificationTimeline.vue'
-import MemoriesBentoGallery from '@/components/detto/MemoriesBentoGallery.vue'
-
-import dettoData from '@/data/detto'
+import nicheuData from '@/data/nicheu'
 
 const router = useRouter()
 
 const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
-  dettoData
+  nicheuData
 
+const workflowSteps = [
+  {
+    title: 'Input arrives',
+    desc: 'A WhatsApp message via Baileys, or a cron-based scheduler tick.',
+  },
+  {
+    title: 'Agent core reasons',
+    desc: 'The LLM decides whether to reply directly or invoke a tool.',
+  },
+  {
+    title: 'Memory & tools',
+    desc: 'Semantic memory from MongoDB plus search, schedule, persona, or custom tools.',
+  },
+  {
+    title: 'Reply or reach out',
+    desc: 'A normal chat reply, or a proactive greeting, check-in, or reminder.',
+  },
+]
 </script>
 
 <template>
@@ -23,21 +37,17 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
     <div class="container-wide py-[2rem]">
       <ButtonPlain :action="() => router.push('/')" label="&larr;" :rounded="false" size="sm" />
       <p class="section-label my-[2rem]">My Work</p>
-      <div class="flex gap-5 items-center flex-col lg:flex-row">
-        <div class="text-left w-full lg:w-auto">
-          <h1 class=" heading-display project-title">
-            Detto
-          </h1>
-          <p class="project-tagline">
-            {{ tagline }}
-          </p>
-          <div class="tech-badges">
-            <span v-for="badge in techBadges" :key="badge" class="tech-badge">{{ badge }}</span>
-          </div>
-        </div>
-        <LoveNoteStack />
+      <h1 class="heading-display project-title">
+        NicheU
+      </h1>
+      <p class="project-tagline">
+        {{ tagline }}
+      </p>
+      <div class="tech-badges">
+        <span v-for="badge in techBadges" :key="badge" class="tech-badge">{{ badge }}</span>
       </div>
     </div>
+
     <AppNavbar />
 
     <!-- The Problem -->
@@ -88,7 +98,7 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
       </div>
     </section>
 
-    <!-- Live Interactive Demo -->
+    <!-- How It Works -->
     <section class="section-space">
       <div class="container-wide text-center">
         <p class="section-label mb-[1.6rem]">{{ showcase.label }}</p>
@@ -96,30 +106,16 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
         <p class="section-subtitle">
           {{ showcase.subtitle }}
         </p>
-      </div>
-      <div class="demo-grid">
-        <div class="demo-item">
-          <h2 class="heading-display mb-5">{{ showcase.demos[0].heading }}</h2>
-          <p class="section-subtitle">
-            {{ showcase.demos[0].subtitle }}
-          </p>
-          <InteractiveCalendar />
+        <div class="flow-diagram-wrap">
+          <AgentFlowDiagram />
         </div>
-        <div class="demo-item">
-          <h2 class="heading-display mb-5">{{ showcase.demos[1].heading }}</h2>
-          <p class="section-subtitle">
-            {{ showcase.demos[1].subtitle }}
-          </p>
-          <NotificationTimeline />
+        <div class="workflow-grid">
+          <div v-for="(step, index) in workflowSteps" :key="step.title" class="workflow-card">
+            <span class="workflow-step">{{ String(index + 1).padStart(2, '0') }}</span>
+            <h3 class="workflow-title">{{ step.title }}</h3>
+            <p class="workflow-desc">{{ step.desc }}</p>
+          </div>
         </div>
-        <div class="demo-item">
-          <h2 class="heading-display mb-5">{{ showcase.demos[2].heading }}</h2>
-          <p class="section-subtitle">
-            {{ showcase.demos[2].subtitle }}
-          </p>
-          <MemoriesBentoGallery />
-        </div>
-
       </div>
     </section>
 
@@ -168,8 +164,8 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
   font-weight: 500;
   padding: 0.45rem 1rem;
   border-radius: 9999px;
-  background: color-mix(in srgb, var(--accent-soft) 12%, transparent);
-  color: var(--accent);
+  background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+  color: var(--brand-color);
 }
 
 .section-title {
@@ -201,6 +197,7 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
 .pain-card {
   border-top: 1px solid var(--color-divider);
   padding-top: 2.4rem;
+  text-align: left;
 }
 
 .pain-title {
@@ -227,6 +224,7 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
   margin-top: 5.6rem;
   border-left: 2px solid var(--color-primary);
   padding-left: 2.4rem;
+  text-align: left;
 }
 
 .concept-quote {
@@ -270,6 +268,7 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
 .feature-card {
   border-top: 1px solid var(--color-divider);
   padding-top: 2.4rem;
+  text-align: left;
 }
 
 .feature-card-title {
@@ -286,93 +285,64 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
   color: var(--color-secondary);
 }
 
-.principle-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/* Workflow */
+.flow-diagram-wrap {
+  margin: 0 auto 4rem;
+  text-align: left;
 }
 
-.principle-list li {
-  font-size: 1.45rem;
-  line-height: 1.55;
-  color: var(--color-secondary);
-}
-
-.principle-list strong {
-  color: var(--color-primary);
-}
-
-/* Demo */
-.demo-grid {
+.workflow-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
-  padding-top: 2rem;
-  padding-left: 2rem;
-  padding-right: 1rem;
+  gap: 2.4rem;
+  margin-top: 0.8rem;
+  text-align: left;
 }
 
-@media (min-width: 768px) {
-  .demo-grid {
+@media (min-width: 640px) {
+  .workflow-grid {
     grid-template-columns: repeat(2, 1fr);
-    padding-left: 5rem;
-    padding-right: 5rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .demo-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .workflow-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-.demo-item {
-  display: flex;
-  flex-direction: column;
+.workflow-card {
+  border-top: 1px solid var(--color-divider);
+  padding-top: 2.4rem;
 }
 
-.demo-item .section-subtitle {
-  margin-bottom: 2rem;
+.workflow-step {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--brand-color);
+  margin-bottom: 1rem;
 }
 
-.demo-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-bottom: 2.4rem;
+.workflow-title {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
-.demo-tab {
-  padding: 0.8rem 1.4rem;
-  border-radius: 9999px;
-  border: 1px solid var(--color-divider);
-  background: var(--color-surface);
-  font-size: 1.3rem;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: var(--font-sans);
+.workflow-desc {
+  margin: 1.2rem 0 0;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  line-height: 1.55;
   color: var(--color-secondary);
-  transition: all 0.15s;
-}
-
-.demo-tab:hover {
-  background: var(--hover-fill);
-  color: var(--color-primary);
-}
-
-.demo-tab.active {
-  background: var(--accent-soft);
-  color: white;
-  border-color: var(--accent-soft);
 }
 
 /* Bottom CTA */
 .cta-heading {
   font-size: clamp(2.4rem, 4vw, 3.6rem);
   margin: 0;
+  white-space: pre-line;
 }
 
 .cta-subtitle {
@@ -392,6 +362,6 @@ const { tagline, techBadges, problem, concept, coreFeatures, showcase, cta } =
 }
 
 .btn-primary {
-  background: var(--accent);
+  background: var(--brand-color);
 }
 </style>

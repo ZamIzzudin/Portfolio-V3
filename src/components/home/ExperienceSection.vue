@@ -5,7 +5,7 @@ import { experience } from '@/data/content'
 <template>
   <section class="section-space experience-section" id="experience">
     <div class="container-wide">
-      <p class="section-label">Work Experience</p>
+      <p class="section-label">Profesional Experience</p>
       <div class="experience-header">
         <h2 class="heading-display experience-title">
           Track record,<br />
@@ -18,19 +18,21 @@ import { experience } from '@/data/content'
       </div>
 
       <ul class="experience-list">
-        <li
-          v-for="item in experience.items"
-          :key="`${item.company}-${item.period}`"
-          class="experience-row"
-        >
+        <li v-for="item in experience.items" :key="`${item.company}-${item.period}`" class="experience-row">
           <div class="experience-body">
             <h3 class="experience-company">{{ item.company }}</h3>
-            <p class="experience-role">{{ item.role }}</p>
+            <p class="experience-role">
+              <span>as</span>
+              {{ item.role }}
+            </p>
+
+          </div>
+          <div class="experience-detail">
+            <span class="experience-period">{{ item.period }}</span>
             <p v-if="item.location" class="experience-location">
               {{ item.location }}
             </p>
           </div>
-          <span class="experience-period">{{ item.period }}</span>
         </li>
       </ul>
     </div>
@@ -75,6 +77,7 @@ import { experience } from '@/data/content'
 }
 
 .experience-company {
+  font-family: var(--font-serif);
   margin: 0;
   font-size: clamp(1.8rem, 2.6vw, 2.4rem);
   font-weight: 500;
@@ -115,6 +118,12 @@ import { experience } from '@/data/content'
 
 .experience-header a:hover .arrow {
   transform: translateY(3px);
+}
+
+.experience-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
 }
 
 @media (max-width: 600px) {

@@ -131,10 +131,5 @@ import { experience } from '@/data/content'
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .experience-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
 </style>
